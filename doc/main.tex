@@ -1,0 +1,432 @@
+\usepackage[detect-none]{siunitx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT PREAMBLE %%%
+\documentclass[12pt]{article}
+\usepackage{titlesec}
+\usepackage{natbib}
+\usepackage{etoc}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{parskip}
+\usepackage[compact]{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black,
+    linktoc=all,
+}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}%polskie znaki
+\usepackage[utf8]{inputenc}%polskie znaki
+%\setlength{\parindent}{4em}
+%\setlength{\parskip}{1em}
+\usepackage{setspace}
+\usepackage{multicol}
+ 
+\renewcommand{\baselinestretch}{1.5}
+
+
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=3cm]{geometry}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+\titlespacing{\subsection}{0pt}{\parskip}{-\parskip}
+
+\title{Zadanie projektowe nr 2} &  &  &  &  &  &  &  & 
+% Title
+\author{Maja Bojarska} &  &  &  &  &  & 
+% Author
+\date{8 czerwca 2019}
+% Date
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+%\pagestyle{fancy}
+%\fancyhf{}
+%\rhead{\theauthor}
+%\lhead{\thetitle}
+
+%\cfoot{\thepage}
+
+\titleformat{\section}[display]
+  {\normalfont\bfseries}{}{0pt}{\Large}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+ & \centering
+    \vspace*{3 cm}
+   % \includegraphics[scale = 0.075]{bsulogo.png}\\[1.0 cm] & % University Logo
+\begin{center}    
+\textsc{\Large Struktury danych i złożoność obliczeniowa}\\[0.5 cm] & 
+\end{center}
+ & \textsc{\Large  }\\[0.5 cm] &  &  &  & % Course Code
+ & \rule{\linewidth}{0.2 mm} \\[0.4 cm]
+ & \vspace{6mm}
+ & {\huge \bfseries \thetitle}\\
+ & \vspace{6mm}
+ & \begin{center}
+ &     
+ & \begin{spacing}{1.0}
+ & \textsc{Badanie efektywności algorytmów grafowych w zależności od rozmiaru instancji oraz sposobu
+reprezentacji grafu w pamięci komputera.}
+ & \end{spacing}
+ & \end{center}
+ & \rule{\linewidth}{0.2 mm} \\[1.5 cm]
+ & 
+ & \iffalse
+ & \begin{minipage}{0.4\textwidth}
+ &  & \begin{flushleft} \large
+ &  & % & \emph{Submitted To:}\\
+ &  & % & Name\\
+          % Affiliation\\
+           %contact info\\
+ &  &  & \end{flushleft}
+ &  &  & \end{minipage}~
+ &  &  & \begin{minipage}{0.4\textwidth}
+            
+ &  &  & 
+           
+ & \end{minipage}\\[2 cm]
+ & \fi
+ & \bfseries
+ & \begin{center}
+        \Large{Maja Bojarska}\\
+        
+        \normalsize nr indeksu: xxxxxx\\
+        \vspace{10mm}
+        \thedate
+    \end{center}
+ & 
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{tocdepth}{2}
+\localtableofcontents
+\newpage
+\setlength{\tabcolsep}{15pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Wstęp}
+\subsection{Opis}
+
+W ramach projektu należało zaimplementować określone algorytmy grafowe oraz dokonać pomiarów czasu potrzebnego do ich wykonania w zależności od ilości wierzchołków i gęstości grafu.
+
+\subsubsection{Zrealizowane algorytmy}
+\begin{itemize}
+\item Minimalne drzewo rozpinające
+\begin{itemize}
+    \item Algorytm Prima
+    \item Algorytm Kruskala
+    \end{itemize}
+    \item Problem najkrótszej ścieżki
+    \begin{itemize}
+    \item Algorytm Dijkstry
+    \item Algorytm Bellmana Forda
+\end{itemize}
+\end{itemize}
+
+Powyższe algorytmy zostały zbadane dla każdej możliwej kombinacji liczb wierzchołków: 10, 25, 50, 75, 100 i gęstości grafu: 25\%, 50\%, 75\%, 99\%.
+
+\newpage
+\subsection{Założenia}
+
+\subsubsection{Język programowania}
+Program został napisany obietkowo w języku C++ (standard C++11). Do implementacji algorytmów oraz struktur danych nie zostały wykorzystane narzędzia, takie jak STL, Boost lub inne podobne.
+
+\subsubsection{Narzędzia pomiarowe}
+Do pomiaru czasu rozpoczęcia i zakończenia operacji została wykorzystana klasa \textit{\\std::chrono::high\_resolution\_clock}, która umożliwia pomiar czasu z dokładnością do jednej nanosekundy.
+
+\subsubsection{Metoda pomiarowa}
+W celu uzyskania wiarygodnych wyników pomiaru czasu, dla każdego zestawu parametrów wykonane po 100 prób. Na podstawie tak otrzymanego zbioru wyników z pojedynczych prób, policzone zostały średnie arytmetyczne, które stanowią ostateczny rezultat pomiarów przedstawiony w formie tabelarycznej oraz wykresu.
+
+\subsubsection{Dane wejściowe}
+Implementacja programu zakłada, że dane wejściowe zostaną wygenerowane losowo lub wczytane z pliku tekstowego (format jak specyfikacji wymagań zadania projektowego). Zakłada się również, że graf wejściowy jest spójny. W przeciwnym wypadku, program wyświetli komunikat dotyczący niespójności grafu, a uruchomiony algorytm grafowy zostanie przerwany.
+
+\subsubsection{Inne wykorzystane narzędzia}
+Wielokrotnie zmierzone czasy wykonania każdej próby dla danej operacji zostały zbiorowo zapisane w plikach w formacie .csv, który umożliwił łatwe wczytanie ich przez dowolny program obsługujący arkusze kalkulacyjne. Uśrednienie wyników zostało wykonane za pomocą pakietu Microsoft Excel 2017. Dokument został złożony w systemie {\LaTeX}.
+
+\newpage
+\section{Minimalne drzewo rozpinające}
+
+\subsection{Algorytm Prima}
+\subsubsection{Teoretyczna złożoność obliczeniowa}
+
+{\Large\[ O(E log V) \]}
+
+\normalfont
+\normalsize
+Do sortowania rozpatrywanych krawedzi malejąco wzgledem wagi został wykorzystany kopiec typu minimum. Wykorzystanie tej struktury daje lepszą  (niższą) pesymistyczną złożoność obliczeniową, niż kolejka priorytetowa, która skutkowałaby złożonością \( O(E log V) \).
+
+\subsubsection{Wyniki pomiarów}
+
+Wartości podane są w mikrosekundach.
+
+\textbf{Implementacja macierzowa}
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+                              & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                            & 83.502                  & 459.849                 & 1800.759                & 4013.412                & 7559.005                 \\ \hline
+50                            & 112.899                 & 785.957                 & 3295.278                & 8380.163                & 17141.571                \\ \hline
+75                            & 162.179                 & 1141.605                & 4926.099                & 12714.848               & 25403.364                \\ \hline
+99                            & 214.216                 & 1548.844                & 6818.221                & 17502.845               & 34148.497                \\ \hline
+\end{tabular}
+\end{center}
+\\
+\vspace{10mm}
+\newpage
+\textbf{Implementacja listowa}
+
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+                              & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                            & 83.502                  & 459.849                 & 1800.759                & 4013.412                & 7559.005                 \\ \hline
+50                            & 112.899                 & 785.957                 & 3295.278                & 8380.163                & 17141.571                \\ \hline
+75                            & 162.179                 & 1141.605                & 4926.099                & 12714.848               & 25403.364                \\ \hline
+99                            & 214.216                 & 1548.844                & 6818.221                & 17502.845               & 34148.497                \\ \hline
+\end{tabular}
+\end{center}
+
+
+
+\subsection{Algorytm Kruskala}
+\subsubsection{Teoretyczna złożoność obliczeniowa}
+{\Large\[ O(E log E) \]}
+Do sortowania krawędzi względem wag wykorzystany został kopiec typu minimum.
+
+Algorytm Kruskala ma gorszy czas wykonania niż algorytm Prima, dla jednego wątku. Jednak ze względu na wykorzystanie struktury zbiorów rozłącznych, można go skutecznie zrównoleglić na maszynie dysponującej wieloma procesorami, co znacząco skróci całkowity czas wywołania algorytmu.
+
+\newpage
+\subsubsection{Wyniki pomiarów}
+
+Wartości podane są w mikrosekundach.
+
+\textbf{Implementacja macierzowa} \\
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{}        & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                            & 82.901                  & 368.578                 & 1077.135                & 2182.742                & 3715.008                 \\ \hline
+50                            & 119.098                 & 566.803                 & 1500.982                & 2849.435                & 4770.979                 \\ \hline
+75                            & 136.385                 & 592.724                 & 2046.211                & 4213.245                & 6637.562                 \\ \hline
+99                            & 173.433                 & 719.953                 & 2209.304                & 4494.381                & 8015.769                 \\ \hline
+\end{tabular}
+\end{center}
+\\
+\vspace{10mm}
+
+\textbf{Implementacja listowa}\\
+
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{}        & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                  & 96.497  & 496.252 & 1449.179 & 3093.235 & 4989.591 \\ \hline
+50                  & 122.183 & 624.336 & 1923.969 & 3728.903 & 6193.025 \\ \hline
+75                  & 165.308 & 701.609 & 2398.343 & 5250.746 & 8366.273 \\ \hline
+99                  & 178.914 & 829.444 & 2631.650 & 5486.263 & 9731.364 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Wykresy typu I}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_Matrix_T1}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_List_T1}% picture filename
+\end{center}
+
+\subsection{Wykresy typu II}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_T2_25}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_T2_50}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_T2_75}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/MST_T2_99}% picture filename
+\end{center}
+
+
+
+\newpage
+\section{Problem najkrótszej ścieżki}
+
+\subsection{Algorytm Dijkstry}
+\subsubsection{Teoretyczna złożoność obliczeniowa}
+{\Large\[ O(E + V log V) \]}
+
+Algorytm został zaimplementowany w sposób wydajny dzięki zastosowaniu kopca binarnego typu minimum, do ekstrakcji kolejnych nieodwiedzonych wierzchołków, o najmniejszym koszcie dotarcia. Wykorzystanie do tego celu struktury, takiej jak kolejka priorytetowa, też jest możliwe, ale skutkowałoby złożonością obliczeniową \( O(E + V^2) \). Takie podejście nadal daje rozwiązanie w czasie wielomianowym, ale gorszym, niż wykorzystanie struktury drzewiastej (kopiec binarny, BST, kopiec Fibonacciego).
+
+\subsubsection{Wyniki pomiarów}
+
+Wartości podane są w mikrosekundach.
+
+\textbf{Implementacja macierzowa}\\
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+                              & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                  & 49.256 & 154.220 & 442.107 & 874.388  & 1573.010 \\ \hline
+50                  & 46.884 & 180.987 & 597.432 & 1260.776 & 2468.146 \\ \hline
+75                  & 54.545 & 225.960 & 799.412 & 1664.349 & 3148.328 \\ \hline
+99                  & 58.178 & 259.879 & 936.046 & 2322.594 & 4585.338 \\ \hline
+\end{tabular}
+\end{center}
+\\
+\newpage
+
+\textbf{Implementacja listowa}\\
+
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+                              & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                  & 36.525 & 142.345 & 405.416 & 810.632  & 1536.803 \\ \hline
+50                  & 39.541 & 174.959 & 536.253 & 1259.534 & 2549.639 \\ \hline
+75                  & 47.549 & 220.631 & 836.861 & 1725.832 & 3453.629 \\ \hline
+99                  & 50.996 & 254.183 & 970.122 & 2573.976 & 5061.502 \\ \hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Algorytm Bellmana-Forda}
+\subsubsection{Teoretyczna złożoność obliczeniowa}
+
+{\Large\[ O(E*V) \]}
+
+Powyższa złożoność wynika z faktu, że w najgorszym wypadku algorytm musi ``odwiedzić'' wszystkie krawędzie w grafie V razy (gdzie V jest liczbą wierzchołków).
+
+W przeciwieństwie do algorytmu Dijkstry, algorytm Bellmana-Forda jest skuteczny w wyszukiwaniu ścieżek w grafach zawierających cykle ujemne, gdyż kończy się w momencie zakończenia propagacji cykli ujemnych. Przykładowo, algorytm Dijkstry nie jest w stanie rozwiązać problemu najkrótszej ściezki dla grafu z ujemnymi cyklami (mógłby się nigdy nie zakończyć). 
+\newpage
+\subsubsection{Wyniki pomiarów}
+
+Wartości podane są w mikrosekundach.
+
+\textbf{Implementacja macierzowa}\\
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{}        & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                  & 80.119  & 1045.582 & 6763.686  & 22559.986 & 49081.009  \\ \hline
+50                  & 107.903 & 1507.567 & 11064.276 & 39122.752 & 89486.488  \\ \hline
+75                  & 158.527 & 1956.617 & 15105.559 & 54991.740 & 116037.973 \\ \hline
+99                  & 172.803 & 2557.564 & 21828.061 & 59952.227 & 149188.883 \\ \hline
+\end{tabular}
+\end{center}
+\\
+\vspace{10mm}
+
+\textbf{Implementacja listowa}\\
+
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{}        & \multicolumn{5}{c|}{Liczba wierzchołków}                                                                                         \\ \hline
+\multicolumn{1}{|c|}{Gęstość} & \multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{25} & \multicolumn{1}{c|}{50} & \multicolumn{1}{c|}{75} & \multicolumn{1}{c|}{100} \\ \hline
+25                  & 77.161  & 715.049  & 5175.207  & 18413.758 & 45941.560  \\ \hline
+50                  & 96.404  & 1287.440 & 11367.856 & 34396.838 & 87206.784  \\ \hline
+75                  & 132.020 & 1767.974 & 14505.883 & 51903.355 & 126170.960 \\ \hline
+99                  & 155.789 & 2222.841 & 18893.881 & 73563.443 & 181436.477 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Wykresy typu I}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_Matrix_T1}% picture filename
+\end{center}
+
+\newpage
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_List_T1}% picture filename
+\end{center}
+
+\subsection{Wykresy typu II}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_T2_25}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_T2_50}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_T2_75}% picture filename
+\end{center}
+
+\begin{center}
+  \includegraphics[width=1.25\textwidth,angle=270]%
+    {images/SPT_T2_99}% picture filename
+\end{center}
+
+
+\newpage
+\section{Wnioski}
+
+\subsection{Minimalne drzewo rozpinające}
+W przypadku problemu minimalnego drzewa rozpinającego, algorytm Kruskala okazał się być szybszym dla każdego zestawu parametrów grafu. \\
+Sposób przechowywania grafu w pamięci komputera zauważalnie wpłynął na czas wykonania obu algorytmów. \\
+Reprezentacja listowa jest mniej korzystna pod względem czasu, niż reprezentacja macierzowa (macierz sąsiedztwa). To zjawisko ma nieznaczny wpływ na czas wykonania algorytmu Kruskala. Nie można tego samego powiedzieć o algorytmie Prima, gdyż czas jego wykonania dla reprezentacji listowej, był średnio prawie dwukrotnie większy, niż dla reprezentacji macierzowej. 
+\\
+\subsection{Problem najkrótszej ściezki}
+Z badań czasu wykonania algorytmów rozwiązujących problem najkrótszej ściezki wynika, że algorytm Dijkstry jest znacznie lepszym, szybszym narzędziem, niż algorytm Bellmana-Forda, gdy graf wejściowy nie posiada cykli ujemnych. W przypadku, gdy występują cykle ujemne, należy zastosować taki algorytm, który potrafi znaleźć rozwiązanie optymalne, a w kontekście zaimplementowanych w tym projekcie algorytmów, jest to tylko alg. Bellmana-Forda. \\
+W przeciwieństwie do wniosków wynikająch z badań algorytmów grafowych, sposób reprezentacji grafu nie miał tutaj wiekszęgo znaczenia dla czasu wykonania. Wyniki otrzymane z pomiarów czasu wykonania algorytmów, były podobne dla zadanego zestawu parametrów (liczba wierzchołków, gęstość), niezależnie od sposobu reprezentacji grafu w pamięci komputera.
+\subsection{Ogólne}
+Rezultaty badania czasu wykonania algorytmów grafowych wykazują spójność z oczekiwaniami, rozumianymi jako asymptotyczna złożoność obliczeniowa. \\
+
+\section{Literatura}
+\begin{itemize}
+    \item \href{https://en.wikipedia.org/wiki/Category:Graph_algorithms}{Wikipedia - Category:Graph algorithms, dostęp 16.05.2019}
+    \item \href{http://algorytmika.wikidot.com/find-union}{algorytmika.wikidot.com - ``Problem Find-Union'', dostęp 21.05.2019}
+    \item \href{https://www.cise.ufl.edu/~sahni/cop3530/slides/lec222.pdf}{www.cise.ufl.edu - ``Union-Find Problem, lecture 222'' , dostęp 17.05.2019}
+    \item \href{https://www-users.cs.umn.edu/~karypis/parbook/Lectures/AG/chap10_slides.pdf}{University of Minnesota - George Karypis ``lectures, Graph Algorithms'' , dostęp 21.05.2019}
+    \item \href{http://www.zio.iiar.pwr.wroc.pl/sdizo.html}{Zespół Inżynierii Oprogramowania i Inteligencji Obliczeniowej, prof. dr hab. inż. Magott Jan - ``Struktury Danych i Złożoność Obliczeniowa'', dostęp 30.05.2019}
+\end{itemize}
+
+
+\end{document}
